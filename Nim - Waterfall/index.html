@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WWW - Nim</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Instructions -->
+    <div id="InstructionsHide" hidden>
+        <div id="InstructionCanvas" class="container vertical wireframe">
+            <button id="InstructionsCloseButton" class="item">X</button>
+            <p>How to Play Nim:</p>
+        </div>
+    </div>
+    <!-- Game -->
+    <div id="GameHide" showing>
+        <div class="container vertical wireframe">
+        <div class="container item horizontal space-between wireframe">
+                <div class="container item horizontal wireframe">
+                    <label for="PlayerOne" class="item">Player 1: </label>
+                    <input id="PlayerOneInput" type="text" name="PlayerOne" class="item"/>
+                </div>
+                <div class="container item horizontal wireframe">
+                    <label for="PlayerTwo" class="item">Player 2: </label>
+                    <input id="PlayerTwoInput" type="text" name="PlayerTwo" class="item"/>
+                </div>
+            </div>
+            <div class="container item horizontal space-between wireframe">
+                <button id="InstructionsOpenButton" class="item">Instructions</button>
+                <div class="container item horizontal wireframe">
+                    <button id="ResetButton" class="item">Reset</button>
+                    <div id="PlayerTurnLabel" class="item"></div>
+                </div>
+                <div id="DifficultyContainer" class="container item wireframe">
+                    <img id="StarOne" src="" alt="Easy"/>
+                    <img id="StarTwo" src="" alt="Medium"/>
+                    <img id="StarThree" src="" alt="Hard"/>
+                </div>
+            </div>
+            <div id="GameCanvas" class="container item wireframe"></div>
+        </div>
+    </div>
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+</html>

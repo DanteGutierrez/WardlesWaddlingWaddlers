@@ -1,0 +1,34 @@
+html, body {
+    margin: 0px;
+    padding: 0px;
+    height: 100vh;
+}
+
+/* Flexbox Styling */
+.container {
+    display: flex;
+}
+.wireframe {
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+.space-between {
+    justify-content: space-between;
+}
+.item {
+    margin: 5px;
+}
+.horizontal {
+    flex-direction: row;
+}
+.vertical {
+    flex-direction: column;
+}
+
+/*Star Styles*/
+.star-on {
+    
+}
+.star-off {
+
+}
