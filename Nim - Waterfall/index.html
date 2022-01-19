@@ -10,37 +10,56 @@
 <body>
     <!-- Instructions -->
     <div id="InstructionsHide" hidden>
-        <div id="InstructionCanvas" class="container vertical wireframe">
+        <div id="InstructionCanvas" class="container vertical">
             <button id="InstructionsCloseButton" class="item">X</button>
-            <p>How to Play Nim:</p>
+            <div class="item">
+                <p>How to play Nim: </p>
+            </div>
         </div>
     </div>
     <!-- Game -->
     <div id="GameHide" showing>
-        <div class="container vertical wireframe">
-        <div class="container item horizontal space-between wireframe">
-                <div class="container item horizontal wireframe">
-                    <label for="PlayerOne" class="item">Player 1: </label>
-                    <input id="PlayerOneInput" type="text" name="PlayerOne" class="item"/>
+        <div class="container vertical ">
+            <!-- Player Names -->
+            <div class="container item horizontal space-between maxwidth">
+                <div class="container item horizontal  menu-background">
+                    <div class="container item vertical">
+                        <img id="PlayerOneIcon" src="media/Whale.png" class="player-icon"/>
+                    </div>
+                    <div class="container item vertical shrinkwrap">
+                        <label for="PlayerOne" class="item">Player 1: </label>
+                        <input id="PlayerOneInput" type="text" name="PlayerOne" class="item"/>
+                    </div>
                 </div>
-                <div class="container item horizontal wireframe">
-                    <label for="PlayerTwo" class="item">Player 2: </label>
-                    <input id="PlayerTwoInput" type="text" name="PlayerTwo" class="item"/>
+                <div class="container item horizontal  menu-background">
+                    <div class="container item vertical">
+                        <img id="PlayerTwoIcon" src="media/BretIcon.png" class="player-icon"/>
+                    </div>
+                    <div class="container item vertical shrinkwrap">
+                        <label for="PlayerTwo" class="item">Player 2: </label>
+                        <input id="PlayerTwoInput" type="text" name="PlayerTwo" class="item"/>
+                    </div>
                 </div>
             </div>
-            <div class="container item horizontal space-between wireframe">
-                <button id="InstructionsOpenButton" class="item">Instructions</button>
-                <div class="container item horizontal wireframe">
-                    <button id="ResetButton" class="item">Reset</button>
+            <!-- General Menu -->
+            <div class="container item horizontal space-between  maxwidth">
+                <button id="InstructionsOpenButton" class="item">
+                    <img src="media/Instruction.png"/>
+                </button>
+                <div class="container item horizontal  menu-background">
+                    <button id="ResetButton" class="item">
+                        <img src="media/Restart.png"/>
+                    </button>
                     <div id="PlayerTurnLabel" class="item"></div>
                 </div>
-                <div id="DifficultyContainer" class="container item wireframe">
-                    <img id="StarOne" src="" alt="Easy"/>
-                    <img id="StarTwo" src="" alt="Medium"/>
-                    <img id="StarThree" src="" alt="Hard"/>
+                <div id="DifficultyContainer" class="container item  shrinkwrap">
+                    <div id="StarOne" class="star-on"></div>
+                    <div id="StarTwo" class="star-off"></div>
+                    <div id="StarThree" class="star-off"></div>
                 </div>
             </div>
-            <div id="GameCanvas" class="container item wireframe"></div>
+            <!-- Game Board -->
+            <div id="GameCanvas" class="container item maxwidth menu-background"></div>
         </div>
     </div>
     <!-- Script -->

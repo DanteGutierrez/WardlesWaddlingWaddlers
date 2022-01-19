@@ -2,11 +2,31 @@ html, body {
     margin: 0px;
     padding: 0px;
     height: 100vh;
+    text-align: center;
+    font-size: 1.1em;
+    box-sizing: border-box;
+    /* text-shadow: 1px 1px 0px white, -1px -1px 0px white, -1px 1px 0px white, 1px -1px 0px white; */
+}
+html {
+    background-image: url("media/Background.png");
+    background-size: cover;
+}
+button {
+    border: none;
+    background-color: rgba(0,0,0,0);
+}
+
+/* Id Specifications*/
+#InstructionsHide {
+    background-image: url("media/Popup.jpg");
+    background-size: cover;
+    height: 100%;
 }
 
 /* Flexbox Styling */
 .container {
     display: flex;
+    align-items: center;
 }
 .wireframe {
   border: 1px solid black;
@@ -24,11 +44,38 @@ html, body {
 .vertical {
     flex-direction: column;
 }
+.maxwidth {
+    width: 100%;
+}
+.maxheight {
+    height: 100%;
+}
+.shrinkwrap {
+    height: fit-content;
+    width: fit-content;
+}
 
 /*Star Styles*/
 .star-on {
-    
+    background-image: url("media/Star_On.png");
+    background-size: cover;
+    height: 50px;
+    width: 50px;
 }
 .star-off {
+    background-image: url("media/Star_Off.png");
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+}
 
+/* Misc */
+.player-icon {
+    border-radius: 50%;
+    border: 2px solid white;
+}
+.menu-background {
+    background-color: rgb(21,104,226);
+    border: 2px solid white;
+    box-sizing: border-box;
 }
