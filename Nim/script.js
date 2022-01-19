@@ -1,33 +1,34 @@
 //Buttons
-let instructionsCloseButton = document.getElementById("InstructionsCloseButton");
-let instructionsOpenButton = document.getElementById("InstructionsOpenButton");
-let resetButton = document.getElementById("ResetButton");
-let difficultyContainer = document.getElementById("DifficultyContainer");
+const instructionsCloseButton = document.getElementById("InstructionsCloseButton");
+const instructionsOpenButton = document.getElementById("InstructionsOpenButton");
+const resetButton = document.getElementById("ResetButton");
+const difficultyContainer = document.getElementById("DifficultyContainer");
 
 //Inputs
-let playerOneInput = document.getElementById("PlayerOneInput");
-let playerTwoInput = document.getElementById("PlayerTwoInput");
+const playerOneInput = document.getElementById("PlayerOneInput");
+const playerTwoInput = document.getElementById("PlayerTwoInput");
 
 //Ids
-let instructionsHide = document.getElementById("InstructionsHide");
-let gameHide = document.getElementById("GameHide");
-let playerPicture = document.getElementById("PlayerPicture");
-let playerTurnLabel = document.getElementById("PlayerTurnLabel");
+const instructionsHide = document.getElementById("InstructionsHide");
+const gameHide = document.getElementById("GameHide");
+const playerPicture = document.getElementById("PlayerPicture");
+const playerTurnLabel = document.getElementById("PlayerTurnLabel");
+const gameCanvas = document.getElementById("GameCanvas");
 
 //Stars
-let starOne = document.getElementById("StarOne");
-let starTwo = document.getElementById("StarTwo");
-let starThree = document.getElementById("StarThree");
+const starOne = document.getElementById("StarOne");
+const starTwo = document.getElementById("StarTwo");
+const starThree = document.getElementById("StarThree");
 
 //Global Variables
-let difficulty = 0;
-let playerTurn = true; //True = P1 | False = P2
-let row_selected;
-let difficulties = {
+const difficulties = {
     0: [1, 3, 5],
     1: [1, 3, 5, 7],
     2: [3, 5, 7, 9, 11]
 };
+let difficulty = 2;
+let playerTurn = true; //True = P1 | False = P2
+let row_selected;
 let board;
 
 //Method
@@ -39,8 +40,7 @@ const TurnSwitch = () => {
 }
 
 const DifficultySwitch = StarId => {
-    if (StarId !== "StarOne" && StarId !== "StarTwo" && StarId !== "StarThree") {
-        console.log("fixed ya");
+    if (StarId !== "StarOne" && StarId !== "StarTwo" && StarId !== "StarThree") { //Checks for any input that isnt a star, then breaks out
         return;
     };
     starOne.classList.remove("star-on");
@@ -66,7 +66,7 @@ const DifficultySwitch = StarId => {
             starThree.classList.add("star-on");
             break;
         default:
-            console.log("There was a bit of an issue");
+            console.log("Star selection is broken");
             break;
     }
 };
@@ -98,8 +98,22 @@ const reset_game = () => {
 }
 
 const setup_board = () => {
+    /*
+    Generates the images and buttons for the current difficulty. If the button to take a harpoon is pressed,
+    the button calls remove_piece() and passes in the row the button was clicked for. Every harpoon has a way
+    of identifying itself, through it's alt tag, it gives the row and current position of itself. You are 
+    going to have to use this in order to remove or hide it.
+    */
     board = reset_game();
-    // handle piece placement visually?
+    let finishedBoard = "";
+    for (let row = 0; row < board.length; row++) {
+        finishedBoard += `<div id="Row${row}" class="container item vertical harpoon-group"><div class="container item horizontal">`;
+        for (let stick = 0; stick < board[row]; stick++) {
+            finishedBoard += `<img src="media/Match_Stick.png" alt="${row + " " + stick}" class="item"/>`;
+        }
+        finishedBoard += `</div><button class="item take-button" onClick="remove_piece(${row})">Take Here</button></div>`;
+    }
+    gameCanvas.innerHTML = finishedBoard;
 }
 
 //Event Listeners
@@ -124,7 +138,7 @@ difficultyContainer.addEventListener("click", evt => {
 //Run on StartUp
 TurnSwitch();
 DifficultySwitch("StarOne");
-setup_board(difficulty);
+setup_board();
 
 
 

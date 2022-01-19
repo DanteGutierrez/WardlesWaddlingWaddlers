@@ -23,6 +23,9 @@ button {
     background-size: cover;
     height: 100%;
 }
+#GameCanvas {
+    flex-wrap: wrap;
+}
 
 /* Flexbox Styling */
 .container {
@@ -35,6 +38,9 @@ button {
 }
 .space-between {
     justify-content: space-between;
+}
+.space-evenly {
+    justify-content: space-evenly;
 }
 .item {
     margin: 5px;
@@ -82,4 +88,20 @@ button {
 }
 .pad-text {
     padding: 10px;
+}
+.harpoon-group {
+    padding: 0% 5%;
+}
+.take-button {
+    background-color: steelblue;
+    border-bottom: 2px solid white;
+    padding: 5px;
+    font-weight: bold;
+    color: white;
+}
+.take-button:hover {
+    background-color: cadetblue;
+}
+button:hover {
+    cursor: pointer;
 }
