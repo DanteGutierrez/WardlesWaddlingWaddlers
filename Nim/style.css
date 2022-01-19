@@ -5,6 +5,7 @@ html, body {
     text-align: center;
     font-size: 1.1em;
     box-sizing: border-box;
+    color: white;
     /* text-shadow: 1px 1px 0px white, -1px -1px 0px white, -1px 1px 0px white, 1px -1px 0px white; */
 }
 html {
@@ -78,4 +79,7 @@ button {
     background-color: rgb(21,104,226);
     border: 2px solid white;
     box-sizing: border-box;
+}
+.pad-text {
+    padding: 10px;
 }
