@@ -23,11 +23,12 @@ let starThree = document.getElementById("StarThree");
 let difficulty = 0;
 let playerTurn = true; //True = P1 | False = P2
 let row_selected;
-var difficulties = {
+let difficulties = {
     0: [1, 3, 5],
     1: [1, 3, 5, 7],
     2: [3, 5, 7, 9, 11]
 };
+let board;
 
 //Method
 const TurnSwitch = () => {
@@ -70,13 +71,15 @@ const DifficultySwitch = StarId => {
     }
 };
 
-const setup_board = () => {
-    board = reset_game();
-    // handle piece placement visually?
-}
-
-const reset_game = () => {
-    return difficulties[difficulty];
+const game_over = () => {
+    var count = 0;
+    for(let i = 0; i < board.length; i++) {
+        count+=board[i];
+    }
+    if (count <= 1) {
+        // game is over, stop everything
+        alert("Game Over ... Won");
+    }
 }
 
 const remove_piece = row => {
@@ -90,15 +93,13 @@ const remove_piece = row => {
     }
 }
 
-const game_over = () => {
-    var count = 0;
-    for(let i = 0; i < board.length; i++) {
-        count+=board[i];
-    }
-    if (count <= 1) {
-        // game is over, stop everything
-        alert("Game Over ... Won");
-    }
+const reset_game = () => {
+    return difficulties[difficulty];
+}
+
+const setup_board = () => {
+    board = reset_game();
+    // handle piece placement visually?
 }
 
 //Event Listeners
@@ -124,7 +125,7 @@ difficultyContainer.addEventListener("click", evt => {
 TurnSwitch();
 DifficultySwitch("StarOne");
 setup_board(difficulty);
-let board = setup_board();
+
 
 
 
