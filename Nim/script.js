@@ -50,58 +50,13 @@ resetButton.addEventListener("click", evt => {
 });
 
 difficultyContainer.addEventListener("click", evt => {
-    starOne.classList.remove("star-on");
-    starTwo.classList.remove("star-on");
-    starThree.classList.remove("star-on");
-    starOne.classList.remove("star-off");
-    starTwo.classList.remove("star-off");
-    starThree.classList.remove("star-off");
-    switch (StarId) {
-        case "StarOne":
-            starOne.classList.add("star-on");
-            starTwo.classList.add("star-off");
-            starThree.classList.add("star-off");
-            difficulty = 0;
-            break;
-        case "StarTwo":
-            starOne.classList.add("star-on");
-            starTwo.classList.add("star-on");
-            starThree.classList.add("star-off");
-            difficulty = 1;
-            break;
-        case "StarThree":
-            starOne.classList.add("star-on");
-            starTwo.classList.add("star-on");
-            starThree.classList.add("star-on");
-            difficulty = 2;
-            break;
-        default:
-            console.log("There was a bit of an issue");
-            break;
-    }
-}
-
-//Event Listeners
-instructionsCloseButton.addEventListener("click", evt => {
-    instructionsHide.hidden = true;
-    gameHide.hidden = false;
-});
-instructionsOpenButton.addEventListener("click", evt => {
-    instructionsHide.hidden = false;
-    gameHide.hidden = true;
-});
-resetButton.addEventListener("click", evt => {
-
-});
-difficultyContainer.addEventListener("click", evt => {
     DifficultySwitch(evt.path[0].id);
 });
 
 //Run on StartUp
 TurnSwitch();
 DifficultySwitch("StarOne");
-    setup_board(difficulty);
-});
+setup_board(difficulty);
 
 let turn = true;
 let row_selected;
