@@ -68,7 +68,7 @@ difficultyContainer.addEventListener("click", evt => {
     setup_board(difficulty);
 });
 
-let turn = 0;
+let turn = true;
 let row_selected;
 var difficulties = {
     0: [1, 3, 5],
@@ -76,15 +76,18 @@ var difficulties = {
     2: [3, 5, 7, 9, 11]
 }
 
-let board = reset_game();
+let board = setup_board();
 
-const setup_board = difficulty => {
+const setup_board = () => {
+    board = reset_game();
     // handle piece placement visually?
+}
+
+const reset_game = () => {
     return difficulties[difficulty];
 }
 
 const remove_piece = row => {
-    // remove one piece from the row that is given, check for a win
     if (row == row_selected || row_selected == null) {
         cur_stick = board[row];
         if (cur_stick > 0) {
@@ -96,13 +99,17 @@ const remove_piece = row => {
 }
 
 const game_over = () => {
-    if (1 == 1) { // TODO change the condition
-        turn = 0;
+    var count = 0;
+    for(let i = 0; i < board.length; i++) {
+        count+=board[i];
     }
-    // check if there's only one piece left on the board and declare the winner
+    if (count <= 1) {
+        // game is over, stop everything
+        alert("Game Over ... Won");
+    }
 }
 
 const switch_turns = () => {
-    // switch turn between players
+    turn = !turn;
     row_selected = null;
 }
