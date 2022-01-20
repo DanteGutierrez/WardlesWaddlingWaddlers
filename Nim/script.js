@@ -3,6 +3,7 @@ const instructionsCloseButton = document.getElementById("InstructionsCloseButton
 const instructionsOpenButton = document.getElementById("InstructionsOpenButton");
 const resetButton = document.getElementById("ResetButton");
 const difficultyContainer = document.getElementById("DifficultyContainer");
+const turnButton = document.getElementById("TurnButton");
 
 //Inputs
 const playerOneInput = document.getElementById("PlayerOneInput");
@@ -26,16 +27,19 @@ const difficulties = {
     1: [1, 3, 5, 7],
     2: [3, 5, 7, 9, 11]
 };
-let difficulty = 2;
-let playerTurn = true; //True = P1 | False = P2
+let difficulty = 0;
+let playerTurn = false; //True = P1 | False = P2
 let row_selected;
 let board;
+let playerOneName;
+let playerTwoName;
 
 //Method
 const TurnSwitch = () => {
+    playerTurn = !playerTurn;
     playerPicture.src = playerTurn ? "media/Whale.png" : "media/BretIcon.png";
-    playerPicture.alt = playerTurn ? "Player 1 Icon" : "Player 2 Icon";
-    playerTurnLabel.innerHTML = playerTurn ? "Player 1's Turn" : "Player 2's Turn";
+    playerPicture.alt = playerTurn ? `${playerOneName} Icon` : `${playerTwoName} Icon`;
+    playerTurnLabel.innerHTML = playerTurn ? `${playerOneName}'s Turn` : `${playerTwoName}'s Turn`;
     row_selected = null;
 }
 
@@ -54,47 +58,63 @@ const DifficultySwitch = StarId => {
             starOne.classList.add("star-on");
             starTwo.classList.add("star-off");
             starThree.classList.add("star-off");
+            difficulty = 0;
             break;
         case "StarTwo":
             starOne.classList.add("star-on");
             starTwo.classList.add("star-on");
             starThree.classList.add("star-off");
+            difficulty = 1;
             break;
         case "StarThree":
             starOne.classList.add("star-on");
             starTwo.classList.add("star-on");
             starThree.classList.add("star-on");
+            difficulty = 2;
             break;
         default:
             console.log("Star selection is broken");
             break;
     }
+    setup_board();
 };
 
-const game_over = () => {
+const game_over = async (row) => {
     var count = 0;
     for(let i = 0; i < board.length; i++) {
         count+=board[i];
     }
     if (count <= 1) {
         // game is over, stop everything
-        alert("Game Over ... Won");
+        console.log(`Game Over ${playerTurn ? `${playerOneName}` : `${playerTwoName}`} Won`); //TODO fix this to display to user
+        document.getElementById(`Row${row}`).lastChild.disabled = true;
     }
+    return;
+}
+const delete_harpoon = async (row) => {
+    box = document.getElementById(`Row${row}`).firstChild;
+    if (box.children.length > 1) {
+        harpoon = box.firstChild;
+        box.removeChild(harpoon);
+    }
+    else {
+        document.getElementById(`Row${row}`).style.display = "none";
+    }
+    return;
 }
 
-const remove_piece = row => {
+const remove_piece = async (row) => {
     if (row == row_selected || row_selected == null) {
-        cur_stick = board[row];
-        if (cur_stick > 0) {
-            cur_stick--;
+        // Logic
+        if (board[row] > 0) {
+            board[row]--;
             row_selected = row;
         }
-        game_over();
+        // Display Update
+        await delete_harpoon(row);
+        // Win Check
+        await game_over(row);
     }
-}
-
-const reset_game = () => {
-    return difficulties[difficulty];
 }
 
 const setup_board = () => {
@@ -104,7 +124,11 @@ const setup_board = () => {
     of identifying itself, through it's alt tag, it gives the row and current position of itself. You are 
     going to have to use this in order to remove or hide it.
     */
-    board = reset_game();
+    playerOneName = playerOneInput.value !== "" ? playerOneInput.value : "Player 1";
+    playerTwoName = playerTwoInput.value !== "" ? playerTwoInput.value : "Player 2";
+    playerTurn = false;
+    TurnSwitch();
+    board = Object.assign([], difficulties[difficulty]);
     let finishedBoard = "";
     for (let row = 0; row < board.length; row++) {
         finishedBoard += `<div id="Row${row}" class="container item vertical harpoon-group"><div class="container item horizontal">`;
@@ -115,6 +139,7 @@ const setup_board = () => {
     }
     gameCanvas.innerHTML = finishedBoard;
 }
+
 
 //Event Listeners
 instructionsCloseButton.addEventListener("click", evt => {
@@ -128,15 +153,21 @@ instructionsOpenButton.addEventListener("click", evt => {
 });
 
 resetButton.addEventListener("click", evt => {
-    setup_board(difficulty);
+    setup_board();
 });
 
 difficultyContainer.addEventListener("click", evt => {
     DifficultySwitch(evt.path[0].id);
 });
 
+turnButton.addEventListener("click", evt => {
+    if (row_selected != null) {
+        TurnSwitch();
+    }
+    
+});
+
 //Run on StartUp
-TurnSwitch();
 DifficultySwitch("StarOne");
 setup_board();
 
