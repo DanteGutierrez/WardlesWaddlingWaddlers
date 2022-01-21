@@ -19,6 +19,27 @@
                 <p class="menu-background item pad-text">You and an opponent take turns removing the harpoons from the field.</p>
                 <p class="menu-background item pad-text">You may take any number of harpoons from any row, but you may only take from a single row per turn</p>
                 <p class="menu-background item pad-text">The person to take the last harpoon on the field is the loser.</p>
+                <p class="menu-background item pad-text">Click the 'Switch Turns' button in the middle of the screen above the board to hand your turn off to the other player</p>
+                <p class="menu-background item pad-text">Putting your name in the boxes in either the upper right or left of the screen will set your name for the round</p>
+                <div class="container description-background item">
+                    <img src="media/Restart.png" alt="Restart button" class="item">
+                    <p class="item pad-text"> This button will restart the game at the current difficulty</p>
+                    <img src="media/Restart.png" alt="Restart button" class="item">
+                </div>
+                <div class="container description-background item">
+                    <img src="media/Star_On.png" alt="Restart button" class="item">
+                    <img src="media/Star_Off.png" alt="Restart button" class="item">
+                    <img src="media/Star_Off.png" alt="Restart button" class="item">
+                    <p class="item pad-text"> These buttons will determine the difficulty</p>
+                    <img src="media/Star_Off.png" alt="Restart button" class="item">
+                    <img src="media/Star_Off.png" alt="Restart button" class="item">
+                    <img src="media/Star_On.png" alt="Restart button" class="item">
+                </div>
+                <div class="container description-background item">
+                    <img src="media/Match_Stick.png" alt="Restart button" class="item">
+                    <p class="item pad-text"> Clicking the button below these groups of harpoons will lock you into taking from that stack, click the button multiple times to take multiple harpoons</p>
+                    <img src="media/Match_Stick.png" alt="Restart button" class="item">
+                </div>
             </div>
         </div>
     </div>
@@ -33,40 +54,49 @@
                     </div>
                     <div class="container item vertical shrinkwrap">
                         <label for="PlayerOne" class="item">Player 1: </label>
-                        <input id="PlayerOneInput" type="text" name="PlayerOne" class="item"/>
+                        <input id="PlayerOneInput" type="text" name="PlayerOne" class="item" placeholder="Name"/>
                     </div>
                 </div>
+                <div class="container item vertical menu-background">
+                    <div class="item">Instructions</div>
+                    <button id="InstructionsOpenButton" class="item">
+                        <img src="media/Instruction.png" alt="Instruction Book"/>
+                    </button>
+                </div>
+                
                 <div class="container item horizontal  menu-background">
                     <div class="container item vertical">
                         <img id="PlayerTwoIcon" src="media/BretIcon.png" alt="Bret" class="player-icon"/>
                     </div>
                     <div class="container item vertical shrinkwrap">
                         <label for="PlayerTwo" class="item">Player 2: </label>
-                        <input id="PlayerTwoInput" type="text" name="PlayerTwo" class="item"/>
+                        <input id="PlayerTwoInput" type="text" name="PlayerTwo" class="item" placeholder="Name"/>
                     </div>
                 </div>
             </div>
             <!-- General Menu -->
-            <div class="container item horizontal space-between  maxwidth">
-                <button id="InstructionsOpenButton" class="item">
-                    <img src="media/Instruction.png" alt="Instruction Book"/>
-                </button>
-                <div class="container item horizontal  menu-background">
-                    <button id="ResetButton" class="item">
-                        <img src="media/Restart.png" alt="Restart Button"/>
-                    </button>
+            <div class="container item horizontal maxwidth">
+                <div class="container item horizontal menu-background">
                     <div class="container item horizontal">
-                        <img id="PlayerPicture"class="player-icon" />
+                        <img id="PlayerPicture" class="player-icon" />
                         <div id="PlayerTurnLabel" class="item"></div>
                     </div>
                     <button id="TurnButton" class="item take-button">
                         Switch Turns
                     </button>
                 </div>
-                <div id="DifficultyContainer" class="container item  shrinkwrap">
-                    <div id="StarOne"></div>
-                    <div id="StarTwo"></div>
-                    <div id="StarThree"></div>
+            </div>
+            <div id="RestartAndDifficulty" class="container item horizontal menu-background">
+                <button id="ResetButton" class="item">
+                    <img src="media/Restart.png" alt="Restart Button" />
+                </button>
+                <div class="container item vertical">
+                    <div>Difficulty Selector</div>
+                    <div id="DifficultyContainer" class="container item  shrinkwrap">
+                        <div id="StarOne"></div>
+                        <div id="StarTwo"></div>
+                        <div id="StarThree"></div>
+                    </div>
                 </div>
             </div>
             <!-- Game Board -->

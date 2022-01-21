@@ -1,4 +1,5 @@
 html, body {
+    user-select: none;
     margin: 0px;
     padding: 0px;
     height: 100vh;
@@ -26,11 +27,17 @@ button {
 #GameCanvas {
     flex-wrap: wrap;
 }
+#RestartAndDifficulty {
+    position: absolute;
+    right: 0px;
+    top: 138px;
+}
 
 /* Flexbox Styling */
 .container {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 .wireframe {
   border: 1px solid black;
@@ -83,6 +90,11 @@ button {
 }
 .menu-background {
     background-color: rgb(21,104,226);
+    border: 2px solid white;
+    box-sizing: border-box;
+}
+.description-background {
+    background-color: purple;
     border: 2px solid white;
     box-sizing: border-box;
 }
