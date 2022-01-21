@@ -79,19 +79,20 @@ const DifficultySwitch = StarId => {
     setup_board();
 };
 
-const game_over = async (row) => {
+const game_over = (row) => {
     var count = 0;
     for(let i = 0; i < board.length; i++) {
         count+=board[i];
     }
     if (count <= 1) {
         // game is over, stop everything
-        console.log(`Game Over ${playerTurn ? `${playerOneName}` : `${playerTwoName}`} Won`); //TODO fix this to display to user
+        alert(`Game Over ${!playerTurn ? `${playerOneName}` : `${playerTwoName}`} Won`); //TODO fix this to display to user
         document.getElementById(`Row${row}`).lastChild.disabled = true;
+        return true;
     }
-    return;
+    return false;
 }
-const delete_harpoon = async (row) => {
+const delete_harpoon = (row) => {
     box = document.getElementById(`Row${row}`).firstChild;
     if (box.children.length > 1) {
         harpoon = box.firstChild;
@@ -103,17 +104,18 @@ const delete_harpoon = async (row) => {
     return;
 }
 
-const remove_piece = async (row) => {
+const remove_piece = (row) => {
     if (row == row_selected || row_selected == null) {
         // Logic
-        if (board[row] > 0) {
+        if (board[row] > 0 && !game_over(row)) {
             board[row]--;
             row_selected = row;
+            delete_harpoon(row);
         }
         // Display Update
-        await delete_harpoon(row);
+        
         // Win Check
-        await game_over(row);
+        //game_over(row);
     }
 }
 
@@ -127,8 +129,8 @@ const setup_board = () => {
     playerOneName = playerOneInput.value !== "" ? playerOneInput.value : "Player 1";
     playerTwoName = playerTwoInput.value !== "" ? playerTwoInput.value : "Player 2";
     playerTurn = false;
-    TurnSwitch();
     board = Object.assign([], difficulties[difficulty]);
+    TurnSwitch();
     let finishedBoard = "";
     for (let row = 0; row < board.length; row++) {
         finishedBoard += `<div id="Row${row}" class="container item vertical harpoon-group"><div class="container item horizontal">`;
