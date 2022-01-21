@@ -31,15 +31,18 @@ let difficulty = 0;
 let playerTurn = false; //True = P1 | False = P2
 let row_selected;
 let board;
-let playerOneName;
-let playerTwoName;
+let playerOneName = "Player 1";
+let playerTwoName = "Player 2";
 
 //Method
+const TurnLabelUpdate = () => {
+    playerTurnLabel.innerHTML = playerTurn ? `${playerOneName}'s Turn` : `${playerTwoName}'s Turn`;
+}
 const TurnSwitch = () => {
     playerTurn = !playerTurn;
     playerPicture.src = playerTurn ? "media/Whale.png" : "media/BretIcon.png";
     playerPicture.alt = playerTurn ? `${playerOneName} Icon` : `${playerTwoName} Icon`;
-    playerTurnLabel.innerHTML = playerTurn ? `${playerOneName}'s Turn` : `${playerTwoName}'s Turn`;
+    TurnLabelUpdate();
     row_selected = null;
 }
 
@@ -112,10 +115,6 @@ const remove_piece = (row) => {
             row_selected = row;
             delete_harpoon(row);
         }
-        // Display Update
-        
-        // Win Check
-        //game_over(row);
     }
 }
 
@@ -126,8 +125,6 @@ const setup_board = () => {
     of identifying itself, through it's alt tag, it gives the row and current position of itself. You are 
     going to have to use this in order to remove or hide it.
     */
-    playerOneName = playerOneInput.value !== "" ? playerOneInput.value : "Player 1";
-    playerTwoName = playerTwoInput.value !== "" ? playerTwoInput.value : "Player 2";
     playerTurn = false;
     board = Object.assign([], difficulties[difficulty]);
     TurnSwitch();
@@ -166,8 +163,17 @@ turnButton.addEventListener("click", evt => {
     if (row_selected != null) {
         TurnSwitch();
     }
-    
 });
+
+playerOneInput.addEventListener("focusout", evt => {
+    playerOneName = playerOneInput.value !== "" ? playerOneInput.value : "Player 1";
+    TurnLabelUpdate();
+});
+
+playerTwoInput.addEventListener("focusout", evt => {
+    playerTwoName = playerTwoInput.value !== "" ? playerTwoInput.value : "Player 2";
+    TurnLabelUpdate();
+})
 
 //Run on StartUp
 DifficultySwitch("StarOne");
