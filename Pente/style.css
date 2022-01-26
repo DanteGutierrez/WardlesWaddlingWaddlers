@@ -1,3 +1,42 @@
+/* Element Styling */
+html, body {
+    margin: 0px;
+    padding: 0px;
+}
+img {
+    height: 40px;
+    width: 40px;
+    position:absolute;
+}
+
+/* General Classes */
+.container { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.vertical {
+    flex-direction: column;
+}
+.horizontal {
+    flex-direction: row;
+}
+.item {
+    padding: 3px;
+    margin: 3px;
+    text-align: center;
+}
+.max-width {
+    width: 100%;
+}
+.max-height {
+    height: 100%;
+}
+
+/* Game Board Styles */
+#GameBoard:hover {
+    cursor: pointer;
+}
 #GameBoardVisual {
     border: 30px solid brown;
     width: fit-content;
@@ -7,31 +46,4 @@
     height: 36px;
     width: 36px;
     border: 2px solid brown;
-}
-/* #GameBoard {
-    background-image: url("assets/PenteBoard_lg.png");
-    background-size: contain;
-    background-repeat: none;
-    width: 800px;
-    height: 800px;
-} */
-#GameBoard:hover {
-    cursor: pointer;
-}
-img {
-    height: 40px;
-    width: 40px;
-    position:absolute;
-    left: 0px;
-    top: 0px;
-}
-
-.container { 
-    display: flex;
-}
-.vertical {
-    flex-direction: column;
-}
-.horizontal {
-    flex-direction: row;
 }
