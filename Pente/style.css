@@ -1,3 +1,37 @@
-#GameBoard {
-    
+#GameBoardVisual {
+    border: 30px solid brown;
+    width: fit-content;
+}
+.boardCell {
+    background-color: lightgoldenrodyellow;
+    height: 36px;
+    width: 36px;
+    border: 2px solid brown;
+}
+/* #GameBoard {
+    background-image: url("assets/PenteBoard_lg.png");
+    background-size: contain;
+    background-repeat: none;
+    width: 800px;
+    height: 800px;
+} */
+#GameBoard:hover {
+    cursor: pointer;
+}
+img {
+    height: 40px;
+    width: 40px;
+    position:absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.container { 
+    display: flex;
+}
+.vertical {
+    flex-direction: column;
+}
+.horizontal {
+    flex-direction: row;
 }
