@@ -31,6 +31,9 @@ let boardArray = [];
 let currentPlayer = true; //True = p1 || False = p2
 let playerOneColor = COLORS.WHITE;
 let playerTwoColor = COLORS.BLACK;
+//If there is 5 or more captures for a player game ends.
+let playerOneCaptures = 0; 
+let playerTwoCaptures = 0;
 
 //Array Coord => Pixel Coord
 const findPixelCoord = ArrayCoord => {
@@ -91,6 +94,35 @@ const renderBoard = () => {
                 
                 //Generate the piece at calculated coords with image
                 gameBoardPhysical.innerHTML += `<img src=${imageString} style="left:${x}px; top:${y}px;"/>`;
+            }
+        }
+    }
+    
+}
+
+// Checks for valid captures
+const capturePiece = () => {
+    //Displacement to check all around last played piece
+    let displacement = [-1, 0 , 1];
+
+    //Iterate through the different displacements to check around piece
+    for (let rowPlacement = 0; rowPlacement < displacement.length; rowPlacement++) {
+        for (let colPlacement = 0; colPlacement < displacement.length; colPlacement++) {
+             // Skip the point of origin
+            if(rowPlacement === 1 && colPlacement ===1 ) {continue;}
+
+    //** CHAGNE** Needs to check if three spots away is still in bounds 
+    if(gameBoard(xPos+displace[i]*3, yPos+displace[j]*3)){  
+
+        // If the current player has a piece 3 spots away
+        if(currenPlayerPiece === gameBoard[xPos+displace[i]*3][yPos+displace[j]*3]){ 
+
+            // Check if there are two of the other player's pieces next to the original x and y position
+            if(otherPlayerPiece === gameBoard[xPos+displace[i]][yPos+displace[j]] 
+            && otherPlayerPiece === gameBoard[xPos+displace[i]*2][yPos+displace[j]*2]){ 
+                    // Remove thos two opposite pieces from baord.
+                    }
+                }
             }
         }
     }
