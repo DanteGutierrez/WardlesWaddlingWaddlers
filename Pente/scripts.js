@@ -5,7 +5,7 @@ const gameBoardPhysical = document.getElementById("GameBoardPhysical");
 
 //Other Elements
 const ghost = document.getElementById("Ghost");
-
+const lastPiece = document.getElementById("LastPiece");
 
 
 //Board Customization Consts
@@ -65,7 +65,7 @@ const generateBoard = () => {
     for (let row = 0; row < boardSize; row++) {
         boardArray[row] = [];
         for (let col = 0; col < boardSize; col++) {
-            boardArray[row][col] = "";
+            boardArray[row][col] = "n";
         }
     }
 
@@ -80,10 +80,10 @@ const renderBoard = () => {
     //Iterate through board and place every piece
     for (let row = 0; row < boardArray.length; row++) {
         for (let col = 0; col < boardArray[row].length; col++) {
-            if (boardArray[row][col] !== "") {
+            if (boardArray[row][col] !== "n") {
 
                 //Turn color into png string
-                let imageString = "assets/" + boardArray[row][col] + ".png"
+                let imageString = "assets/" + boardArray[row][col] + ".png";
 
                 //Find out where to place the piece
                 x = findPixelCoord(row);
@@ -109,15 +109,27 @@ gameBoard.addEventListener("click", evt => {
     let arrayY = findArrayCoord(y);
     // console.log(`Assumed Cell: ${arrayX}, ${arrayY}`);
 
-    //Set Color in place
-    boardArray[arrayX][arrayY] = (currentPlayer ? playerOneColor : playerTwoColor); 
+    //Change Last place piece indicator
+    lastPiece.hidden = true;
 
-    //Update Board
-    renderBoard();
+    if ((arrayX >= 0 && arrayX <= boardSize - 1) && (arrayY >= 0 && arrayY <= boardSize - 1)) {
+        if ((boardArray[arrayX][arrayY] === "n")) {
+            //Set Color in place
+            boardArray[arrayX][arrayY] = currentPlayer ? playerOneColor : playerTwoColor; 
 
-    //Change Player Turn
-    currentPlayer = !currentPlayer;
-    
+            //Set piece indicator place
+            lastPiece.style.left = `${findPixelCoord(arrayX) + (cellSize / 4)}px`;
+            lastPiece.style.top = `${findPixelCoord(arrayY) + (cellSize / 4)}px`;
+
+            lastPiece.hidden = false;
+
+            //Update Board
+            renderBoard();
+
+            //Change Player Turn
+            currentPlayer = !currentPlayer;
+        }
+    }
 });
 
 //Ghost Hover Piece
