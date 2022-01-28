@@ -164,8 +164,8 @@ gameBoard.addEventListener("click", evt => {
                 console.log("tria")
                 // TODO tria
             } else if (consecutivePieces == 4) {
-                console.log("quad feed")
-                // TODO quad feed
+                console.log("tessera")
+                // TODO tessera
             } else if (consecutivePieces >= 5) {
                 console.log("win")
                 // TODO win
