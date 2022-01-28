@@ -32,6 +32,47 @@ let currentPlayer = true; //True = p1 || False = p2
 let playerOneColor = COLORS.WHITE;
 let playerTwoColor = COLORS.BLACK;
 
+const countConsecutivePieces = (row, col, rowShift, colShift) => {
+    // Tristyn's baby mk2
+    var count = 1;
+    var consecutive = true;
+    var curPiece = boardArray[row][col];
+    while (consecutive) {
+        let nextPiece = "n";
+        try{
+            nextPiece = boardArray[row + (count * rowShift)][col + (count * colShift)];
+        }catch(ArrayIndexOutOfBoundsException) {
+            consecutive = false;
+        }
+        if(nextPiece !== "n") { // skips empty pieces
+            if (curPiece == nextPiece) { // if the next piece is the same as the placed piece
+                count++;
+            } else {
+                consecutive = false;
+            }
+        } else {
+            consecutive = false;
+        }
+    }
+    return count;
+}
+
+const highestConsecutive = (row, col) => {
+    console.log(row, col)
+    let vertical = countConsecutivePieces(row, col, 0, 1) + countConsecutivePieces(row, col, 0, -1) - 1;
+    let horizontal = countConsecutivePieces(row, col, 1, 0) + countConsecutivePieces(row, col, -1, 0) - 1;
+    let diagonalLeft = countConsecutivePieces(row, col, -1, 1) + countConsecutivePieces(row, col, 1, -1) - 1;
+    let diagonalRight = countConsecutivePieces(row, col, -1, -1) + countConsecutivePieces(row, col, 1, 1) -1;
+    console.log(vertical + " vertical")
+    console.log(horizontal + " horizontal")
+    console.log(diagonalLeft + " diagonal left")
+    console.log(diagonalRight + " diagonal right")
+    console.log("\n")
+
+    var consecutivePieces = [ vertical, horizontal, diagonalLeft, diagonalRight ];
+    return Math.max(consecutivePieces);
+}
+
 //Array Coord => Pixel Coord
 const findPixelCoord = ArrayCoord => {
     // Takes either Array Row number or Array Y number and turns it into pixel measurement
@@ -108,6 +149,7 @@ gameBoard.addEventListener("click", evt => {
     let arrayX = findArrayCoord(x);
     let arrayY = findArrayCoord(y);
     // console.log(`Assumed Cell: ${arrayX}, ${arrayY}`);
+    
 
     //Change Last place piece indicator
     lastPiece.hidden = true;
@@ -116,6 +158,7 @@ gameBoard.addEventListener("click", evt => {
         if ((boardArray[arrayX][arrayY] === "n")) {
             //Set Color in place
             boardArray[arrayX][arrayY] = currentPlayer ? playerOneColor : playerTwoColor; 
+            highestConsecutive(arrayX, arrayY);
 
             //Set piece indicator place
             lastPiece.style.left = `${findPixelCoord(arrayX) + (cellSize / 4)}px`;
