@@ -32,6 +32,11 @@ button {
     right: 0px;
     top: 138px;
 }
+#HomeButton {
+    position: absolute;
+    left: 0px;
+    top: 138px;
+}
 
 /* Flexbox Styling */
 .container {

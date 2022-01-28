@@ -1,0 +1,81 @@
+/* Basic Styling*/
+html {
+    height: 100vh;
+}
+html, body {
+    padding: 0px;
+    margin: 0px;
+    user-select: none;
+}
+a {
+    text-decoration: none;
+    color: lightseagreen;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+/* Header Styling */
+header {
+    border-bottom: 2px solid lightgray;
+    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.5);
+}
+.header-item {
+    padding: 5px 15px 15px 15px;
+    border-left: 2px solid lightgray;
+    border-right: 2px solid lightgray;
+}
+
+/* Menu Styling */
+#Menus {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0px;
+}
+#Menus .item {
+    margin: 20px 3px;
+}
+
+/* Footer Styling */
+.copyright {
+    display: none;
+}
+#Credits:hover .copyright {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 10%;
+    border: 2px solid black;
+    background-color: white;
+}
+
+/* Flex */
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.item {
+    padding: 3px;
+    margin: 3px;
+}
+.vertical {
+    flex-direction: column;
+}
+.horizontal {
+    flex-direction: row;
+}
+.max-width {
+    width: 100%;
+}
+.max-height {
+    height: 100%;
+}
+.space-between {
+    justify-content: space-between;
+}
+.space-around {
+    justify-content: space-around;
+}
