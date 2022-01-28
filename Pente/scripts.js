@@ -58,19 +58,19 @@ const countConsecutivePieces = (row, col, rowShift, colShift) => {
 }
 
 const highestConsecutive = (row, col) => {
-    console.log(row, col)
+    // console.log(row, col)
     let vertical = countConsecutivePieces(row, col, 0, 1) + countConsecutivePieces(row, col, 0, -1) - 1;
     let horizontal = countConsecutivePieces(row, col, 1, 0) + countConsecutivePieces(row, col, -1, 0) - 1;
     let diagonalLeft = countConsecutivePieces(row, col, -1, 1) + countConsecutivePieces(row, col, 1, -1) - 1;
     let diagonalRight = countConsecutivePieces(row, col, -1, -1) + countConsecutivePieces(row, col, 1, 1) -1;
-    console.log(vertical + " vertical")
-    console.log(horizontal + " horizontal")
-    console.log(diagonalLeft + " diagonal left")
-    console.log(diagonalRight + " diagonal right")
-    console.log("\n")
+    // console.log(vertical + " vertical")
+    // console.log(horizontal + " horizontal")
+    // console.log(diagonalLeft + " diagonal left")
+    // console.log(diagonalRight + " diagonal right")
+    // console.log("\n")
 
     var consecutivePieces = [ vertical, horizontal, diagonalLeft, diagonalRight ];
-    return Math.max(consecutivePieces);
+    return Math.max(...consecutivePieces);
 }
 
 //Array Coord => Pixel Coord
@@ -158,7 +158,18 @@ gameBoard.addEventListener("click", evt => {
         if ((boardArray[arrayX][arrayY] === "n")) {
             //Set Color in place
             boardArray[arrayX][arrayY] = currentPlayer ? playerOneColor : playerTwoColor; 
-            highestConsecutive(arrayX, arrayY);
+            let consecutivePieces = highestConsecutive(arrayX, arrayY);
+            console.log(consecutivePieces)
+            if(consecutivePieces == 3) {
+                console.log("tria")
+                // TODO tria
+            } else if (consecutivePieces == 4) {
+                console.log("quad feed")
+                // TODO quad feed
+            } else if (consecutivePieces >= 5) {
+                console.log("win")
+                // TODO win
+            }
 
             //Set piece indicator place
             lastPiece.style.left = `${findPixelCoord(arrayX) + (cellSize / 4)}px`;
