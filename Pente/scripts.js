@@ -57,6 +57,35 @@ const countConsecutivePieces = (row, col, rowShift, colShift) => {
     return count;
 }
 
+const capturePiece = (row, col, currentPlayerPiece) => {
+    //Displacement to check all around last played piece
+    let displacement = [-1, 0 , 1];
+
+    //Iterate through the different displacements to check around piece
+    for (let rowDisplacement = 0; rowDisplacement < displacement.length; rowDisplacement++) {
+        for (let colDisplacement = 0; colDisplacement < displacement.length; colDisplacement++) {
+             // Skip the point of origin
+            if(rowDisplacement === 1 && colDisplacement === 1) {continue;}
+
+    //Check if three spots away is still in bounds 
+    if(gameBoard[row+displacement[rowDisplacementt]*3][col+displacement[colPlacement]*3] < boardSize){  
+
+        // If the current player has a piece 3 spots away
+        if(gameBoard[row+displacement[i]*3][col+displacement[j]*3] === currentPlayerPiece){ 
+
+            // Check if there are two of the other player's pieces next to the original x and y position
+            if(otherPlayerPiece === gameBoard[row+displacement[i]][col+displacement[j]] 
+            && otherPlayerPiece === gameBoard[row+displacement[i]*2][col+displacement[j]*2]) { 
+                    // Remove thos two opposite pieces from baord.
+                    gameBoard[row+displacement[i]][col+displacement[j]] = "";
+                    gameBoard[row+displacement[i]*2][col+displacement[j]*2] = "";
+                    }
+                }
+            }
+        }
+    }
+}
+
 const highestConsecutive = (row, col) => {
     // console.log(row, col)
     let vertical = countConsecutivePieces(row, col, 0, 1) + countConsecutivePieces(row, col, 0, -1) - 1;
