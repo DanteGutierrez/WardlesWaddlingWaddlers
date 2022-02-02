@@ -221,4 +221,31 @@ gameBoard.addEventListener("mousemove", evt => {
     }
 });
 
+//timer code
+var timer = document.getElementById("timer");
+var timeLeft = 30; //set to 30 when turn switches
+var timerDone = false;
+
+var timerId = setInterval(countdown, 1000);
+
+function countdown() {
+    if (timeLeft == -1) {
+        timeLeft = 5;
+        timer.style.color = "red";
+        if(timerDone){
+            noTime();
+        }
+        timerDone = true;
+    } else {
+        timer.innerHTML = timeLeft + ' seconds remaining';
+        timeLeft--;
+    }
+}
+
+function noTime(){
+    // will alert people when time runs out commented out so its not annoying
+    // alert("You ran out of time") 
+    clearTimeout(timerId);
+}
+
 generateBoard();
