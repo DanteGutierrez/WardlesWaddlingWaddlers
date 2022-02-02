@@ -6,6 +6,14 @@ const gameBoardPhysical = document.getElementById("GameBoardPhysical");
 //Other Elements
 const ghost = document.getElementById("Ghost");
 const lastPiece = document.getElementById("LastPiece");
+const closeToWin = document.getElementById("CloseToWin");
+const player1ColorPicker = document.getElementById("Player1Color");
+const player2ColorPicker = document.getElementById("Player2Color");
+const player1Name = document.getElementById("PlayerOneName");
+const player1Label = document.getElementById("PlayerOneLabel");
+const player2Name = document.getElementById("PlayerTwoName");
+const player2Label = document.getElementById("PlayerTwoLabel");
+const resetButton = document.getElementById("ResetButton");
 
 
 //Board Customization Consts
@@ -23,7 +31,8 @@ const COLORS = Object.freeze({
     PURPLE: 'purple',
     RED: 'red',
     WHITE: 'white',
-    YELLOW: 'yellow'
+    YELLOW: 'yellow',
+    EMPTY: 'n'
 });
 
 //Basic Variables
@@ -31,6 +40,8 @@ let boardArray = [];
 let currentPlayer = true; //True = p1 || False = p2
 let playerOneColor = COLORS.WHITE;
 let playerTwoColor = COLORS.BLACK;
+let playerOneName = "Player 1";
+let playerTwoName = "Player 2";
 
 const countConsecutivePieces = (row, col, rowShift, colShift) => {
     // Tristyn's baby mk2
@@ -38,13 +49,13 @@ const countConsecutivePieces = (row, col, rowShift, colShift) => {
     var consecutive = true;
     var curPiece = boardArray[row][col];
     while (consecutive) {
-        let nextPiece = "n";
+        let nextPiece = COLORS.EMPTY;
         try{
             nextPiece = boardArray[row + (count * rowShift)][col + (count * colShift)];
         }catch(ArrayIndexOutOfBoundsException) {
             consecutive = false;
         }
-        if(nextPiece !== "n") { // skips empty pieces
+        if(nextPiece !== COLORS.EMPTY) { // skips empty pieces
             if (curPiece == nextPiece) { // if the next piece is the same as the placed piece
                 count++;
             } else {
@@ -135,10 +146,10 @@ const generateBoard = () => {
     for (let row = 0; row < boardSize; row++) {
         boardArray[row] = [];
         for (let col = 0; col < boardSize; col++) {
-            boardArray[row][col] = "n";
+            boardArray[row][col] = COLORS.EMPTY;
         }
     }
-
+    lastPiece.hidden = true;
     //console.log(boardArray);
 };
 
@@ -150,7 +161,7 @@ const renderBoard = () => {
     //Iterate through board and place every piece
     for (let row = 0; row < boardArray.length; row++) {
         for (let col = 0; col < boardArray[row].length; col++) {
-            if (boardArray[row][col] !== "n") {
+            if (boardArray[row][col] !== COLORS.EMPTY) {
 
                 //Turn color into png string
                 let imageString = "assets/" + boardArray[row][col] + ".png";
@@ -160,7 +171,7 @@ const renderBoard = () => {
                 y = findPixelCoord(col);
                 
                 //Generate the piece at calculated coords with image
-                gameBoardPhysical.innerHTML += `<img src=${imageString} style="left:${x}px; top:${y}px;"/>`;
+                gameBoardPhysical.innerHTML += `<img src=${imageString} style="left:${x}px; top:${y}px;" class="piece"/>`;
             }
         }
     }
@@ -184,19 +195,17 @@ gameBoard.addEventListener("click", evt => {
     lastPiece.hidden = true;
 
     if ((arrayX >= 0 && arrayX <= boardSize - 1) && (arrayY >= 0 && arrayY <= boardSize - 1)) {
-        if ((boardArray[arrayX][arrayY] === "n")) {
+        if ((boardArray[arrayX][arrayY] === COLORS.EMPTY)) {
             //Set Color in place
             boardArray[arrayX][arrayY] = currentPlayer ? playerOneColor : playerTwoColor; 
             let consecutivePieces = highestConsecutive(arrayX, arrayY);
             console.log(consecutivePieces)
             if(consecutivePieces == 3) {
-                console.log("tria")
-                // TODO tria
+                closeToWin.innerHTML = (currentPlayer ? playerOneName : playerTwoName) + " has a tria!";
             } else if (consecutivePieces == 4) {
-                console.log("tessera")
-                // TODO tessera
+                closeToWin.innerHTML = (currentPlayer ? playerOneName : playerTwoName) + " has a tessera!";
             } else if (consecutivePieces >= 5) {
-                console.log("win")
+                closeToWin.innerHTML = (currentPlayer ? playerOneName : playerTwoName) + " has won!";
                 // TODO win
             }
 
@@ -249,5 +258,93 @@ gameBoard.addEventListener("mousemove", evt => {
         ghost.hidden = true;
     }
 });
+
+//Player 1 color picker
+player1ColorPicker.addEventListener("click", evt => {
+    elementList = evt.composedPath();
+    for (let elementI = 0; elementI < 3; elementI++) {
+        //elementList[i].classList.contains
+        switch (elementList[elementI].classList[0]) {
+            case "black":
+                playerOneColor = COLORS.BLACK;
+                break;
+            case "blue":
+                playerOneColor = COLORS.BLUE;
+                break;
+            case "green":
+                playerOneColor = COLORS.GREEN;
+                break;
+            case "orange":
+                playerOneColor = COLORS.ORANGE;
+                break;
+            case "purple":
+                playerOneColor = COLORS.PURPLE;
+                break;
+            case "red":
+                playerOneColor = COLORS.RED;
+                break;
+            case "white":
+                playerOneColor = COLORS.WHITE;
+                break;
+            case "yellow":
+                playerOneColor = COLORS.YELLOW;
+                break;
+            default:
+                playerOneColor = COLORS.BLACK;
+                break;
+        }
+    }
+});
+
+//Player 2 color picker
+player2ColorPicker.addEventListener("click", evt => {
+    elementList = evt.composedPath();
+    for (let elementI = 0; elementI < 3; elementI++) {
+        //elementList[i].classList.contains
+        switch (elementList[elementI].classList[0]) {
+            case "black":
+                playerTwoColor = COLORS.BLACK;
+                break;
+            case "blue":
+                playerTwoColor = COLORS.BLUE;
+                break;
+            case "green":
+                playerTwoColor = COLORS.GREEN;
+                break;
+            case "orange":
+                playerTwoColor = COLORS.ORANGE;
+                break;
+            case "purple":
+                playerTwoColor = COLORS.PURPLE;
+                break;
+            case "red":
+                playerTwoColor = COLORS.RED;
+                break;
+            case "white":
+                playerTwoColor = COLORS.WHITE;
+                break;
+            case "yellow":
+                playerTwoColor = COLORS.YELLOW;
+                break;
+            default:
+                playerTwoColor = COLORS.BLACK;
+                break;
+        }
+    }
+});
+
+resetButton.addEventListener("click", evt => {
+    generateBoard();
+    renderBoard();
+})
+
+player1Name.addEventListener("keyup", evt => {
+    playerOneName = player1Name.value;
+    player1Label.innerHTML = playerOneName;
+})
+player2Name.addEventListener("keyup", evt => {
+    playerTwoName = player2Name.value;
+    player2Label.innerHTML = playerTwoName;
+})
 
 generateBoard();

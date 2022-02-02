@@ -7,47 +7,148 @@
     <link href="style.css" rel="stylesheet"/>
     <title>WWW - Pente</title>
 </head>
-<body>
-    
+<body class="container horizontal space-between">
     <div id="GameBoard">
         <div id="GameBoardVisual" class="container vertical"></div>
-        <img id="Ghost" src="assets/black.png"/>
-        <img id="LastPiece" src="assets/red.png" hidden/>
+        <img id="Ghost" src="assets/black.png" class="piece" hidden/>
+        <img id="LastPiece" src="assets/red.png" class="piece" hidden/>
         <div id="GameBoardPhysical"></div>
+    </div>
+    <div id="Menus" class="container vertical">
+        <div class="container horizontal">
+            <div class="container vertical">
+                <div class="container horizontal">
+                    <button id="ResetButton" class="item">
+                        Reset
+                    </button>
+                </div>
+                <div class="container horizontal">
+                    <div id="CloseToWin" class="item"></div>
+                </div>
+                <div class="container horizontal">
+                    <label id="PlayerOneLabel" for="playerOneName" class="item">Player 1: </label>
+                    <input id="PlayerOneName" type="text" placeholder="Name" class="item"/>
+                    <label id="PlayerTwoLabel" for="playerTwoName" class="item">Player 2: </label>
+                    <input id="PlayerTwoName" type="text" placeholder="Name"  class="item"/>
+                </div>
+                <div class="container horizontal">
+                    <!-- Turn Times -->
+                    <!-- Save -->
+                    <div class="dropdown item">
+                        <button class="dropbtn">Choose Color</button>
+                        <div id="Player1Color" class="dropdown-content">
+                            <div class="black player1">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/black.png" class="menu-picture item">
+                                    <div class="item">Black</div>
+                                </button>
+                            </div>
+                            <div class="blue player1">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/blue.png" class="menu-picture item">
+                                    <div class="item">Blue</div>
+                                </button>
+                            </div>
+                            <div class="green player1">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/green.png" class="menu-picture item">
+                                    <div class="item">Green</div>
+                                </button>
+                            </div>
+                            <div class="orange player1">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/orange.png" class="menu-picture item">
+                                    <div class="item">Orange</div>
+                                </button>
+                            </div>
+                            <div class="purple player1">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/purple.png" class="menu-picture item">
+                                    <div class="item">Purple</div>
+                                </button>
+                            </div>
+                            <div class="red player1">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/red.png" class="menu-picture item">
+                                    <div class="item">Red</div>
+                                </button>
+                            </div>
+                            <div class="white player1">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/white.png" class="menu-picture item">
+                                    <div class="item">White</div>
+                                </button>
+                            </div>
+                            <div class="yellow player1">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/yellow.png" class="menu-picture item">
+                                    <div class="item">Yellow</div>
+                                </button>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="dropdown item">
+                        <button class="dropbtn">Choose Color</button>
+                        <div id="Player2Color" class="dropdown-content">
+                            <div class="black player2">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/black.png" class="menu-picture item">
+                                    <div class="item">Black</div>
+                                </button>
+                            </div>
+                            <div class="blue player2">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/blue.png" class="menu-picture item">
+                                    <div class="item">Blue</div>
+                                </button>
+                            </div>
+                            <div class="green player2">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/green.png" class="menu-picture item">
+                                    <div class="item">Green</div>
+                                </button>
+                            </div>
+                            <div class="orange player2">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/orange.png" class="menu-picture item">
+                                    <div class="item">Orange</div>
+                                </button>
+                            </div>
+                            <div class="purple player2">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/purple.png" class="menu-picture item">
+                                    <div class="item">Purple</div>
+                                </button>
+                            </div>
+                            <div class="red player2">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/red.png" class="menu-picture item">
+                                    <div class="item">Red</div>
+                                </button>
+                            </div>
+                            <div class="white player2">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/white.png" class="menu-picture item">
+                                    <div class="item">White</div>
+                                </button>
+                            </div>
+                            <div class="yellow player2">
+                                <button class="container horizontal dropdown-color max-width">
+                                    <img src="assets/yellow.png" class="menu-picture item">
+                                    <div class="item">Yellow</div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- Toaster for alert of tria / tessera -->
 
     <!-- Beginning of color button
-    <div class="dropdown">
-        <button class="dropbtn">Choose Color</button>
-        <div class="dropdown-content">
-            <a href="#">
-            <img src="Pente\assets\black.png"
-            width="15" height="10">Black</a>
-            <a href="#">
-            <img src="Pente\assets\blue.png"
-            width="15" height="10">Blue</a>
-            <a href="#">
-                <img src="Pente\assets\green.png"
-            width="15" height="10">Green</a>
-            <a href="#">
-                <img src="Pente\assets\orange.png"
-            width="15" height="10">Orange</a>
-            <a href="#">
-                <img src="Pente\assets\purple.png"
-            width="15" height="10">Purple</a>
-            <a href="#">
-                <img src="Pente\assets\red.png"
-            width="15" height="10">Red</a>
-            <a href="#">
-                <img src="Pente\assets\white.png"
-            width="15" height="10">White</a>
-            <a href="#">
-                <img src="Pente\assets\yellow.png"
-            width="15" height="10">Yellow</a>
-        </div> 
-    </div>
- End of Color Button-->
+    
+ End of Color Button -->
     <script src="scripts.js"></script>
 </body>
 </html>

@@ -33,20 +33,27 @@ img {
 .max-height {
     height: 100%;
 }
-
+.space-between {
+    justify-content: space-between;
+}
 /* Game Board Styles */
 #GameBoard:hover {
     cursor: pointer;
 }
 #GameBoardVisual {
-    border: 30px solid brown;
+    border: 30px solid #6f4518;
     width: fit-content;
 }
 .boardCell {
-    background-color: lightgoldenrodyellow;
+    background-color: #f3d5b5;
     height: 36px;
     width: 36px;
-    border: 2px solid brown;
+    border: 2px solid #6f4518;
+}
+.piece {
+    height: 40px;
+    width: 40px;
+    position:absolute;
 }
 
 #LastPiece {
@@ -55,7 +62,7 @@ img {
     z-index: 1000;
 }
 
-/* <!-- Beginning of color button styling
+/* Beginning of color button styling */
 .dropbtn {
     background-color: #4e044e;
     color: white;
@@ -85,10 +92,23 @@ img {
     text-decoration: none;
     display: block;
   }
-  
+  .menu-picture {
+      width: 20px;
+      height: 20px;
+  }
+  .dropdown-color {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      justify-content: flex-start;
+  }
+  .dropdown-color:hover {
+      background-color: yellow;
+      
+  }
   .dropdown-content a:hover {background-color: #ddd;}
   
   .dropdown:hover .dropdown-content {display: block;}
   
   .dropdown:hover .dropbtn {background-color: #b4800f;}
-  End of Color Button styling */
+  /* End of Color Button styling */
