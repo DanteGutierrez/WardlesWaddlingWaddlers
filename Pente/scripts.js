@@ -209,6 +209,8 @@ gameBoard.addEventListener("click", evt => {
                 // TODO win
             }
 
+            capturePiece(arrayX,arrayY, currentPlayer);
+
             //Set piece indicator place
             lastPiece.style.left = `${findPixelCoord(arrayX) + (cellSize / 4)}px`;
             lastPiece.style.top = `${findPixelCoord(arrayY) + (cellSize / 4)}px`;
