@@ -74,8 +74,8 @@ const capturePiece = (row, col, currentPlayerPiece) => {
         if(gameBoard[row+displacement[i]*3][col+displacement[j]*3] === currentPlayerPiece){ 
 
             // Check if there are two of the other player's pieces next to the original x and y position
-            if(otherPlayerPiece === gameBoard[row+displacement[i]][col+displacement[j]] 
-            && otherPlayerPiece === gameBoard[row+displacement[i]*2][col+displacement[j]*2]) { 
+            if(gameBoard[row+displacement[i]][col+displacement[j]] != currentPlayerPiece
+            && gameBoard[row+displacement[i]*2][col+displacement[j]*2] != currentPlayerPiece) { 
                     // Remove thos two opposite pieces from baord.
                     gameBoard[row+displacement[i]][col+displacement[j]] = "";
                     gameBoard[row+displacement[i]*2][col+displacement[j]*2] = "";
