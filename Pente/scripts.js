@@ -249,3 +249,65 @@ function noTime(){
 }
 
 generateBoard();
+
+// cookie code 
+let board = [
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"],
+    ["n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n", "n","n"]
+];
+
+let currentTurn = '1'
+let p1PiecesTaken = 8;
+let p2PiecesTaken = 6;
+
+var saveState = {
+    "boardState":board,
+    "p1PiecesTaken":p1PiecesTaken,
+    "p2PiecesTaken":p2PiecesTaken,
+    "currentTurn":currentTurn
+};
+
+let cookieObjAAA = JSON.stringify(saveState);
+
+//make the cookie
+document.cookie = cookieObjAAA;
+
+//get the cookie back
+let decodedCookie = decodeURIComponent(document.cookie);
+var strReturnedCookie = JSON.stringify(decodedCookie)
+//console.log(JSON.stringify(decodedCookie));
+
+//we can assign it to the regular variables this was just for testing to make sure it returned the right data
+let jsonObj = JSON.parse(strReturnedCookie);
+let newBoardState = jsonObj.boardState;
+let newP1PiecesTaken = jsonObj.p1PiecesTaken;
+let newP2PiecesTaken = jsonObj.p2PiecesTaken;
+let newCurrentTurn = jsonObj.currentTurn;
+
+//console logs of all the info from the cookie
+console.log("json object: ");
+console.log(jsonObj);
+
+console.log("board: ");
+console.log(newBoardState);
+
+console.log("p1 pieces taken: "+newP1PiecesTaken);
+console.log("p2 pieces taken: "+newP2PiecesTaken);
+console.log("current turn: "+newCurrentTurn);
