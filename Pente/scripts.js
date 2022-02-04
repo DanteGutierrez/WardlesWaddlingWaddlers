@@ -10,10 +10,11 @@ const closeToWin = document.getElementById("CloseToWin");
 const player1ColorPicker = document.getElementById("Player1Color");
 const player2ColorPicker = document.getElementById("Player2Color");
 const player1Name = document.getElementById("PlayerOneName");
-const player1Label = document.getElementById("PlayerOneLabel");
 const player2Name = document.getElementById("PlayerTwoName");
-const player2Label = document.getElementById("PlayerTwoLabel");
 const resetButton = document.getElementById("ResetButton");
+const colorPickRow = document.getElementById("ColorPickRow");
+const player1CaptureLabel = document.getElementById("PlayerOneCaptureLabel");
+const player2CaptureLabel = document.getElementById("PlayerTwoCaptureLabel");
 
 
 //Board Customization Consts
@@ -42,6 +43,10 @@ let playerOneColor = COLORS.WHITE;
 let playerTwoColor = COLORS.BLACK;
 let playerOneName = "Player 1";
 let playerTwoName = "Player 2";
+let gameStarted = false;
+let gameWon = false;
+let playerOneCaptures = 0;
+let playerTwoCaptures = 0;
 
 const countConsecutivePieces = (row, col, rowShift, colShift) => {
     // Tristyn's baby mk2
@@ -71,7 +76,6 @@ const countConsecutivePieces = (row, col, rowShift, colShift) => {
 const capturePiece = (row, col, currentPlayerPiece) => {
     //Displacement to check all around last played piece
     let displacement = [-1, 0 , 1];
-
     //Iterate through the different displacements to check around piece
     for (let rowDisplacement = 0; rowDisplacement < displacement.length; rowDisplacement++) {
         for (let colDisplacement = 0; colDisplacement < displacement.length; colDisplacement++) {
@@ -79,22 +83,24 @@ const capturePiece = (row, col, currentPlayerPiece) => {
             if(rowDisplacement === 1 && colDisplacement === 1) {continue;}
 
     //Check if three spots away is still in bounds 
-    if(gameBoard[row+displacement[rowDisplacementt]*3][col+displacement[colPlacement]*3] < boardSize){  
-
-        // If the current player has a piece 3 spots away
-        if(gameBoard[row+displacement[i]*3][col+displacement[j]*3] === currentPlayerPiece){ 
-
-            // Check if there are two of the other player's pieces next to the original x and y position
-            if(gameBoard[row+displacement[i]][col+displacement[j]] != currentPlayerPiece
-            && gameBoard[row+displacement[i]*2][col+displacement[j]*2] != currentPlayerPiece) { 
-                    // Remove thos two opposite pieces from baord.
-                    gameBoard[row+displacement[i]][col+displacement[j]] = "";
-                    gameBoard[row+displacement[i]*2][col+displacement[j]*2] = "";
+            if (row + (displacement[rowDisplacement] * 3) >= 0 && row + (displacement[rowDisplacement] * 3) < boardSize) {
+                if (col + (displacement[colDisplacement] * 3) >= 0 && col + (displacement[colDisplacement] * 3) < boardSize) {
+                    // If the current player has a piece 3 spots away
+                    if (boardArray[row + (displacement[rowDisplacement] * 3)][col + (displacement[colDisplacement] * 3)] === currentPlayerPiece) {
+                        // Check if there are two of the other player's pieces next to the original x and y position
+                        if (boardArray[row + displacement[rowDisplacement]][col + displacement[colDisplacement]] != currentPlayerPiece
+                            && boardArray[row + displacement[rowDisplacement] * 2][col + displacement[colDisplacement] * 2] != currentPlayerPiece) {
+                            // Remove thos two opposite pieces from baord.
+                            boardArray[row + displacement[rowDisplacement]][col + displacement[colDisplacement]] = COLORS.EMPTY;
+                            boardArray[row + displacement[rowDisplacement] * 2][col + displacement[colDisplacement] * 2] = COLORS.EMPTY;
+                            return true;
+                        }
                     }
                 }
             }
         }
     }
+    return false;
 }
 
 const highestConsecutive = (row, col) => {
@@ -129,6 +135,9 @@ const findArrayCoord = PixelCoord => {
 const generateBoard = () => {
     //Clear Board
     let board = "";
+    gameStarted = false;
+    gameWon = false;
+    colorPickRow.style.display = "flex";
 
     //Tie rows and columns of visual tiles
     for (let row = 0; row < boardSize + 1; row++) {
@@ -177,9 +186,12 @@ const renderBoard = () => {
     }
 }
 
+const updateCaptures = () => {
+    player1CaptureLabel.innerHTML = `${player1Name}`
+}
+
 //Place Piece Click
 gameBoard.addEventListener("click", evt => {
-
     //Grab Current Cursor Coords
     let x = evt.clientX;
     let y = evt.clientY;
@@ -194,22 +206,27 @@ gameBoard.addEventListener("click", evt => {
     //Change Last place piece indicator
     lastPiece.hidden = true;
 
-    if ((arrayX >= 0 && arrayX <= boardSize - 1) && (arrayY >= 0 && arrayY <= boardSize - 1)) {
+    if ((arrayX >= 0 && arrayX <= boardSize - 1) && (arrayY >= 0 && arrayY <= boardSize - 1) && !gameWon) {
         if ((boardArray[arrayX][arrayY] === COLORS.EMPTY)) {
             //Set Color in place
             boardArray[arrayX][arrayY] = currentPlayer ? playerOneColor : playerTwoColor; 
             let consecutivePieces = highestConsecutive(arrayX, arrayY);
-            console.log(consecutivePieces)
+            gameStarted = true;
+            colorPickRow.style.display = "none";
             if(consecutivePieces == 3) {
                 closeToWin.innerHTML = (currentPlayer ? playerOneName : playerTwoName) + " has a tria!";
             } else if (consecutivePieces == 4) {
                 closeToWin.innerHTML = (currentPlayer ? playerOneName : playerTwoName) + " has a tessera!";
             } else if (consecutivePieces >= 5) {
                 closeToWin.innerHTML = (currentPlayer ? playerOneName : playerTwoName) + " has won!";
+                gameWon = true;
                 // TODO win
             }
 
-            capturePiece(arrayX,arrayY, currentPlayer);
+            if (capturePiece(arrayX, arrayY, currentPlayer ? playerOneColor : playerTwoColor)) {
+                (currentPlayer ? playerOneCaptures++ : playerTwoCaptures++);
+                updateCaptures();
+            }
 
             //Set piece indicator place
             lastPiece.style.left = `${findPixelCoord(arrayX) + (cellSize / 4)}px`;
@@ -238,7 +255,7 @@ gameBoard.addEventListener("mousemove", evt => {
     let arrayY = findArrayCoord(y);
 
     //If you are within the bounds of the array, display the ghost
-    if ((arrayX >= 0 && arrayX <= boardSize - 1) && (arrayY >= 0 && arrayY <= boardSize - 1)) { 
+    if ((arrayX >= 0 && arrayX <= boardSize - 1) && (arrayY >= 0 && arrayY <= boardSize - 1) && !gameWon) { 
 
         //Ghost math
         let boardX = findPixelCoord(arrayX);
@@ -263,74 +280,98 @@ gameBoard.addEventListener("mousemove", evt => {
 
 //Player 1 color picker
 player1ColorPicker.addEventListener("click", evt => {
-    elementList = evt.composedPath();
+    let elementList = evt.composedPath();
+    let colorPicked = false;
     for (let elementI = 0; elementI < 3; elementI++) {
         //elementList[i].classList.contains
         switch (elementList[elementI].classList[0]) {
             case "black":
                 playerOneColor = COLORS.BLACK;
+                colorPicked = true;
                 break;
             case "blue":
                 playerOneColor = COLORS.BLUE;
+                colorPicked = true;
                 break;
             case "green":
                 playerOneColor = COLORS.GREEN;
+                colorPicked = true;
                 break;
             case "orange":
                 playerOneColor = COLORS.ORANGE;
+                colorPicked = true;
                 break;
             case "purple":
                 playerOneColor = COLORS.PURPLE;
+                colorPicked = true;
                 break;
             case "red":
                 playerOneColor = COLORS.RED;
+                colorPicked = true;
                 break;
             case "white":
                 playerOneColor = COLORS.WHITE;
+                colorPicked = true;
                 break;
             case "yellow":
                 playerOneColor = COLORS.YELLOW;
+                colorPicked = true;
                 break;
             default:
                 playerOneColor = COLORS.BLACK;
                 break;
+        }
+        if (colorPicked) {
+            break;
         }
     }
 });
 
 //Player 2 color picker
 player2ColorPicker.addEventListener("click", evt => {
-    elementList = evt.composedPath();
+    let elementList = evt.composedPath();
+    let colorPicked = false;
     for (let elementI = 0; elementI < 3; elementI++) {
         //elementList[i].classList.contains
         switch (elementList[elementI].classList[0]) {
             case "black":
                 playerTwoColor = COLORS.BLACK;
+                colorPicked = true;
                 break;
             case "blue":
                 playerTwoColor = COLORS.BLUE;
+                colorPicked = true;
                 break;
             case "green":
                 playerTwoColor = COLORS.GREEN;
+                colorPicked = true;
                 break;
             case "orange":
                 playerTwoColor = COLORS.ORANGE;
+                colorPicked = true;
                 break;
             case "purple":
                 playerTwoColor = COLORS.PURPLE;
+                colorPicked = true;
                 break;
             case "red":
                 playerTwoColor = COLORS.RED;
+                colorPicked = true;
                 break;
             case "white":
                 playerTwoColor = COLORS.WHITE;
+                colorPicked = true;
                 break;
             case "yellow":
                 playerTwoColor = COLORS.YELLOW;
+                colorPicked = true;
                 break;
             default:
                 playerTwoColor = COLORS.BLACK;
                 break;
+        }
+        if (colorPicked) {
+            break;
         }
     }
 });
@@ -340,13 +381,11 @@ resetButton.addEventListener("click", evt => {
     renderBoard();
 })
 
-player1Name.addEventListener("keyup", evt => {
+player1Name.addEventListener("focusout", evt => {
     playerOneName = player1Name.value;
-    player1Label.innerHTML = playerOneName;
 })
-player2Name.addEventListener("keyup", evt => {
+player2Name.addEventListener("focusout", evt => {
     playerTwoName = player2Name.value;
-    player2Label.innerHTML = playerTwoName;
 })
 
 generateBoard();

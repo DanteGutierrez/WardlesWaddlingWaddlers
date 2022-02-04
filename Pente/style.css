@@ -6,7 +6,7 @@ html, body {
 img {
     height: 40px;
     width: 40px;
-    position:absolute;
+    /* position:absolute; */
     pointer-events: none;
 }
 
@@ -99,8 +99,8 @@ img {
   .dropdown-color {
       background-color: transparent;
       border: none;
-      cursor: pointer;
       justify-content: flex-start;
+      cursor: pointer;
   }
   .dropdown-color:hover {
       background-color: yellow;
@@ -108,7 +108,7 @@ img {
   }
   .dropdown-content a:hover {background-color: #ddd;}
   
-  .dropdown:hover .dropdown-content {display: block;}
+  .dropdown:hover .dropdown-content {display: flex; flex-direction: column;}
   
   .dropdown:hover .dropbtn {background-color: #b4800f;}
   /* End of Color Button styling */
