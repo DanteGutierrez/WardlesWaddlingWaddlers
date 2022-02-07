@@ -6,7 +6,8 @@ const gameBoardPhysical = document.getElementById("GameBoardPhysical");
 //Other Elements
 const ghost = document.getElementById("Ghost");
 const lastPiece = document.getElementById("LastPiece");
-const closeToWin = document.getElementById("CloseToWin");
+const player1closeToWin = document.getElementById("Player1CloseToWin");
+const player2closeToWin = document.getElementById("Player2CloseToWin");
 const player1ColorPicker = document.getElementById("Player1Color");
 const player2ColorPicker = document.getElementById("Player2Color");
 const player1Name = document.getElementById("PlayerOneName");
@@ -15,11 +16,13 @@ const resetButton = document.getElementById("ResetButton");
 const colorPickRow = document.getElementById("ColorPickRow");
 const player1CaptureLabel = document.getElementById("PlayerOneCaptureLabel");
 const player2CaptureLabel = document.getElementById("PlayerTwoCaptureLabel");
+const player1ColorImage = document.getElementById("Player1ColorChoiceImage");
+const player2ColorImage = document.getElementById("Player2ColorChoiceImage");
 
 
 //Board Customization Consts
 const outsideMargin = 0;
-const boardMargin = 30;
+const boardMargin = 20;
 const cellSize = 40;
 const boardSize = 19;
 
@@ -47,6 +50,7 @@ let gameStarted = false;
 let gameWon = false;
 let playerOneCaptures = 0;
 let playerTwoCaptures = 0;
+const captureStates = ["○ ○ ○ ○ ○", "● ○ ○ ○ ○", "● ● ○ ○ ○", "● ● ● ○ ○", "● ● ● ● ○", "● ● ● ● ●"];
 
 const countConsecutivePieces = (row, col, rowShift, colShift) => {
     // Tristyn's baby mk2
@@ -137,6 +141,12 @@ const generateBoard = () => {
     let board = "";
     gameStarted = false;
     gameWon = false;
+    playerOneCaptures = 0;
+    playerTwoCaptures = 0;
+    player1CaptureLabel.innerHTML = captureStates[0]; 
+    player2CaptureLabel.innerHTML = captureStates[0]; 
+    player1closeToWin.innerHTML = "Nothing to Report";
+    player2closeToWin.innerHTML = "Nothing to Report";
     colorPickRow.style.display = "flex";
 
     //Tie rows and columns of visual tiles
@@ -187,7 +197,8 @@ const renderBoard = () => {
 }
 
 const updateCaptures = () => {
-    player1CaptureLabel.innerHTML = `${player1Name}`
+    currentPlayer ? player1CaptureLabel.innerHTML = captureStates[playerOneCaptures] : player2CaptureLabel.innerHTML = captureStates[playerTwoCaptures];
+
 }
 
 //Place Piece Click
@@ -214,11 +225,11 @@ gameBoard.addEventListener("click", evt => {
             gameStarted = true;
             colorPickRow.style.display = "none";
             if(consecutivePieces == 3) {
-                closeToWin.innerHTML = (currentPlayer ? playerOneName : playerTwoName) + " has a tria!";
+                currentPlayer ? player1closeToWin.innerHTML = (playerOneName + " has a tria!") : player2closeToWin.innerHTML = (playerTwoName + " has a tria!")
             } else if (consecutivePieces == 4) {
-                closeToWin.innerHTML = (currentPlayer ? playerOneName : playerTwoName) + " has a tessera!";
+                currentPlayer ? player1closeToWin.innerHTML = (playerOneName + " has a tessera!") : player2closeToWin.innerHTML = (playerTwoName + " has a tessera!")
             } else if (consecutivePieces >= 5) {
-                closeToWin.innerHTML = (currentPlayer ? playerOneName : playerTwoName) + " has won!";
+                currentPlayer ? player1closeToWin.innerHTML = (playerOneName + " has won!") : player2closeToWin.innerHTML = (playerTwoName + " has won!")
                 gameWon = true;
                 // TODO win
             }
@@ -226,6 +237,10 @@ gameBoard.addEventListener("click", evt => {
             if (capturePiece(arrayX, arrayY, currentPlayer ? playerOneColor : playerTwoColor)) {
                 (currentPlayer ? playerOneCaptures++ : playerTwoCaptures++);
                 updateCaptures();
+                if ((currentPlayer ? playerOneCaptures == 5 : playerTwoCaptures == 5)) {
+                    currentPlayer ? player1closeToWin.innerHTML = (playerOneName + " has won!") : player2closeToWin.innerHTML = (playerTwoName + " has won!")
+                    gameWon = true;
+                }
             }
 
             //Set piece indicator place
@@ -282,46 +297,68 @@ gameBoard.addEventListener("mousemove", evt => {
 player1ColorPicker.addEventListener("click", evt => {
     let elementList = evt.composedPath();
     let colorPicked = false;
+    let oppositeColorIndex = -1;
+    for (let opposite = 0; opposite < player2ColorPicker.children.length; opposite++) {
+        player2ColorPicker.children[opposite].style.display = "flex";
+    }
     for (let elementI = 0; elementI < 3; elementI++) {
         //elementList[i].classList.contains
         switch (elementList[elementI].classList[0]) {
             case "black":
                 playerOneColor = COLORS.BLACK;
+                player1ColorImage.src = "assets/" + COLORS.BLACK + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 0;
                 break;
             case "blue":
                 playerOneColor = COLORS.BLUE;
+                player1ColorImage.src = "assets/" + COLORS.BLUE + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 1;
                 break;
             case "green":
                 playerOneColor = COLORS.GREEN;
+                player1ColorImage.src = "assets/" + COLORS.GREEN + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 2;
                 break;
             case "orange":
                 playerOneColor = COLORS.ORANGE;
+                player1ColorImage.src = "assets/" + COLORS.ORANGE + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 3;
                 break;
             case "purple":
                 playerOneColor = COLORS.PURPLE;
+                player1ColorImage.src = "assets/" + COLORS.PURPLE + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 4;
                 break;
             case "red":
                 playerOneColor = COLORS.RED;
+                player1ColorImage.src = "assets/" + COLORS.RED + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 5;
                 break;
             case "white":
                 playerOneColor = COLORS.WHITE;
+                player1ColorImage.src = "assets/" + COLORS.WHITE + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 6;
                 break;
             case "yellow":
                 playerOneColor = COLORS.YELLOW;
+                player1ColorImage.src = "assets/" + COLORS.YELLOW + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 7;
                 break;
             default:
                 playerOneColor = COLORS.BLACK;
                 break;
         }
         if (colorPicked) {
+            player2ColorPicker.children[oppositeColorIndex].style.display = "none";
+            console.log(player2ColorPicker.children[oppositeColorIndex])
             break;
         }
     }
@@ -331,46 +368,68 @@ player1ColorPicker.addEventListener("click", evt => {
 player2ColorPicker.addEventListener("click", evt => {
     let elementList = evt.composedPath();
     let colorPicked = false;
+    let oppositeColorIndex = -1;
+    for (let opposite = 0; opposite < player1ColorPicker.children.length; opposite++) {
+        player1ColorPicker.children[opposite].style.display = "flex";
+    }
     for (let elementI = 0; elementI < 3; elementI++) {
         //elementList[i].classList.contains
         switch (elementList[elementI].classList[0]) {
             case "black":
                 playerTwoColor = COLORS.BLACK;
+                player2ColorImage.src = "assets/" + COLORS.BLACK + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 0;
                 break;
             case "blue":
                 playerTwoColor = COLORS.BLUE;
+                player2ColorImage.src = "assets/" + COLORS.BLUE + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 1;
                 break;
             case "green":
                 playerTwoColor = COLORS.GREEN;
+                player2ColorImage.src = "assets/" + COLORS.GREEN + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 2;
                 break;
             case "orange":
                 playerTwoColor = COLORS.ORANGE;
+                player2ColorImage.src = "assets/" + COLORS.ORANGE + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 3;
                 break;
             case "purple":
                 playerTwoColor = COLORS.PURPLE;
+                player2ColorImage.src = "assets/" + COLORS.PURPLE + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 4;
                 break;
             case "red":
                 playerTwoColor = COLORS.RED;
+                player2ColorImage.src = "assets/" + COLORS.RED + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 5;
                 break;
             case "white":
                 playerTwoColor = COLORS.WHITE;
+                player2ColorImage.src = "assets/" + COLORS.WHITE + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 6;
                 break;
             case "yellow":
                 playerTwoColor = COLORS.YELLOW;
+                player2ColorImage.src = "assets/" + COLORS.YELLOW + ".png";
                 colorPicked = true;
+                oppositeColorIndex = 7;
                 break;
             default:
                 playerTwoColor = COLORS.BLACK;
                 break;
         }
         if (colorPicked) {
+            player1ColorPicker.children[oppositeColorIndex].style.display = "none";
+            console.log(player1ColorPicker.children[oppositeColorIndex])
             break;
         }
     }

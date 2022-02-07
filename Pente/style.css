@@ -2,6 +2,9 @@
 html, body {
     margin: 0px;
     padding: 0px;
+    height: 100vh;
+    background-image: url("assets/mc.png");
+    background-size: 10vh;
 }
 img {
     height: 40px;
@@ -9,7 +12,18 @@ img {
     /* position:absolute; */
     pointer-events: none;
 }
-
+button {
+    color: white;
+    font-weight: bold;
+    background-color: #A27035;
+    border: none;
+    border-bottom: 3px solid #B88B4A;
+    padding: 5px;
+}
+button:hover {
+    background-color: #B88B4A;
+    cursor: pointer;
+}
 /* General Classes */
 .container { 
     display: flex;
@@ -41,7 +55,7 @@ img {
     cursor: pointer;
 }
 #GameBoardVisual {
-    border: 30px solid #6f4518;
+    border: 20px solid #6f4518;
     width: fit-content;
 }
 .boardCell {
@@ -61,10 +75,18 @@ img {
     width: 20px;
     z-index: 1000;
 }
-
+#Menus {
+    justify-content: flex-start;
+    align-self: flex-start;
+    width: 100%;
+    margin: 10px;
+    padding: 10px;
+    background-color: #533E2D;
+    color: white;
+}
 /* Beginning of color button styling */
 .dropbtn {
-    background-color: #4e044e;
+    background-color: #A27035;
     color: white;
     padding: 16px;
     font-size: 16px;
@@ -80,8 +102,7 @@ img {
   .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #1b7cb4;
-    min-width: 160px;
+    background-color: #B88B4A;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
   }
@@ -103,12 +124,12 @@ img {
       cursor: pointer;
   }
   .dropdown-color:hover {
-      background-color: yellow;
+      background-color: #DDCA7D;
       
   }
   .dropdown-content a:hover {background-color: #ddd;}
   
   .dropdown:hover .dropdown-content {display: flex; flex-direction: column;}
   
-  .dropdown:hover .dropbtn {background-color: #b4800f;}
+  .dropdown:hover .dropbtn {background-color: #B88B4A;}
   /* End of Color Button styling */
